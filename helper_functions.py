@@ -53,13 +53,25 @@ def get_glass(compound_number, data):
             glass.append(row[0])
     return glass
 
+def get_glass_info(glass, data):
+    dict = {}
+    for row in data:
+        row = row.tolist()
+        if row[0] == glass:
+            for i in range(6,len(row)):
+                if row[i] != 0.0:
+                    dict[el_ls[i]] = row[i]
+    return dict
+
 if __name__ == "__main__":
     data = read_csv()
     data=np.array(data)
-    res = get_composition("Al", data)
-    print(res)
+    res1 = get_composition("Al", data)
+    print(res1)
     res2 = get_glass(1,data)
     print(res2)
+    res3 = get_glass_info('# 1', data)
+    print(res3)
 
     
     
