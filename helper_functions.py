@@ -53,9 +53,6 @@ def get_glass(compound_number, data):
             glass.append(row[0])
     return glass
 
-def get_glass_composition(glass, data):
-    
-
 if __name__ == "__main__":
     data = read_csv()
     data=np.array(data)
