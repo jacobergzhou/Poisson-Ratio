@@ -5,8 +5,9 @@ Created on Thu Jun 20 14:39:51 2019
 @author: liubeisong
 ------
 Update 06.25.2019
-	1. Add log	-Kai
-	2. Organzie all functions	Beisong 
+	1. Kai		Add log					
+	2. Bei		Organzie all functions	 
+	3. Jacob	Write convert_to_csv, read_csv, get_composition
 """
 
 import pandas as pd
