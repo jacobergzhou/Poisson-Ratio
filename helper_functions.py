@@ -3,6 +3,10 @@
 Created on Thu Jun 20 14:39:51 2019
 
 @author: liubeisong
+------
+Update 06.25.2019
+	1. Add log	-Kai
+	2. Organzie all functions	Beisong 
 """
 
 import pandas as pd
