@@ -77,6 +77,24 @@ def get_glass(compound_number, data):
 			glass.append(row[0])
 	return glass
 
+def get_glass_info(glass, data):
+    """
+	get the composition information of a specific glass
+	param:
+		glass: index of the glass (e.g. '# 305')
+		data: a matrix representation of the csv file
+	return:
+		dict: a dictionary of the glass composition
+	"""
+    dict = {}
+    for row in data:
+        row = row.tolist()
+        if row[0] == glass:
+            for i in range(6,len(row)):
+                if row[i] != 0.0:
+                    dict[el_ls[i]] = row[i]
+    return dict
+
 def get_metal_glass(data):
 	"""
 	get the list of row vectors that contains only metal element
