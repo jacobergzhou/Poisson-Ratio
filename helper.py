@@ -51,23 +51,34 @@ def get_composition(compound,data):
 		return result
 
 def get_glass(compound_number, data):
-    glass = []
-    
-    for row in data:
-        row = row.tolist()
-        count = 0  
-        for i in range(6,len(row)-3):
-            if row[i] != 0.0:
-                count = count + 1
-        if count == compound_number:
-            glass.append(row[0])
-    return glass
+	"""
+	get the list of row number that contains a specific number of compound
+	param:
+		compound_number: number of compound contained
+		data: a matrix representation of the csv file
+	return:
+		a list of all the corresponding row vector number which has the specfic number of compounds
+	"""
+	glass = []
+	if compound_number > 183:
+		print("ERROR: compound_number exceeds largest possible number")
+		exit()
+	for row in data:
+		row = row.tolist()
+		count = 0  
+		for i in range(6,len(row)-3):
+			if row[i] != 0.0:
+				count = count + 1
+			
+		if count == compound_number:
+			glass.append(row[0])
+	return glass
 
 
 if __name__ == "__main__":
 	data = read_csv()
 	data = np.array(data)
 	# print(data)
-	res = get_composition("Al",data)
+	res = get_glass(5,data)
 	print(res)
 	# print(data[0])
