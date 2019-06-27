@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from collections import Counter
+import pickle
 el_ls = ["","Code","Glass #","Author","Year","Trademark","Ag2O","AgI","Al","Al2O3","AlF3","AlN","As","As2O3","As2O5","As2S3","As2Se3","AsSe","B","B2O3","BaCl2","BaF2","BaO","BeF2","BeO","Bi2O3","BiCl3","Br","Ca","CaF2","CaO","Cd","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Cl","Co3O4","CoO","Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er","Er2O3","ErF3","Eu","Eu2O3","EuF3","F","Fe","Fe2O3","FeO","Ga","Ga2O3","Ga2S3","Ga2Se3","GaF3","Gd2O3","GdF3","Ge","GeO2","GeS2","GeSe2","H2O","HfF4","HfO2","Hg","Ho2O3","I","InF3","K","K2O","K2S","K2SO4","KBr","KCl","KF","KHF2","La","La2O3","La2S3","LaF3","Li","Li2O","Li2S","Li2SO4","LiBr","LiCl","LiF","LiI","MgF2","MgO","Mn2O3","MnF2","MnO","MnO2","MoO2","MoO3","N","Na","Na2O","Na2S","Na2SO4","NaCl","NaF","NaPO3","Nb2O5","Nd","Nd2O3","NdF3","NH4NO3","NiO","O","OH","P","P2O5","Pb","PbCl2","PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","S","Sb","Sb2O3","Sb2S3","Sc2O3","Se","Si","Si3N4","SiC","SiO2","Sm2O3","Sn","SnO","SnO2","SO2","SO3","Sr","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3","Te","TeO2","Th","ThF4","ThO2","Ti","TiO2","Tl","Tl2O","Tl2Se","TlSe","Tm2O3","U","U3O8","UO2","V","V2O5","VO6","WO3","Y","Y2O3","Yb2O3","YbF3","YF3","ZnCl2","ZnF2","ZnO","ZnSO4","Zr","ZrF4","ZrO2","Young's modulus E (GPa)","Shear modulus G (GPa)","Poisson's ratio v"]
 
 metal_ls = ["As","Al","B","Si","Ca","Cd","Er","Eu","Fe","Ga","Ge","Hg","K","La","Li","Na","Nd","Pb","Sn","Sr","Sb","Te","Sb","Th","Ti","Tl","U","V","Y","Zr"]
@@ -147,7 +148,23 @@ def plot_helper(data):
 # 			num += 1
 # 	print(num)
 
-
+def get_glass_info(glass, data):
+	"""
+	get the composition information of a specific glass
+	param:
+		glass: index of the glass (e.g. '# 305')
+		data: a matrix representation of the csv file
+	return:
+		dict: a dictionary of the glass composition
+	"""
+	dict = {}
+	for row in data:
+		row = row.tolist()
+		if row[0] == glass:
+			for i in range(6,len(row)):
+				if row[i] != 0.0:
+					dict[el_ls[i]] = row[i]
+	return (glass,dict)
 	
 
 def plot_hist(el_dict):
@@ -171,16 +188,24 @@ def plot_hist(el_dict):
 	plt.show()
 
 if __name__ == "__main__":
-    data = read_csv()
-    data = np.array(data)
-    res = get_glass(3,data)
-    print(res)
-    print(len(res))
-    el_dict = plot_helper(data)
-    plot_hist(el_dict)
-    
+
+	# data = read_csv()
+	# data = np.array(data)
+	# res = get_metal_glass(data)
+	# num = []
+	# for i in res:
+	# 	num.append(i[0])
+	# x = []
+	# for i in num:
+	# 	glass,dict = get_glass_info(i,data)
+	# 	x.append((glass,dict))
+	# with open('metal.pkl','wb') as f:
+	#  	pickle.dump(x,f)
+	with open('metal.pkl','rb') as f:	
+		ls = pickle.load(f)
+	print(ls)
 
 
-	
+
 	
 
