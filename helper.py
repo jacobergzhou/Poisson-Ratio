@@ -170,12 +170,16 @@ def plot_hist(el_dict):
 	plt.bar(ypos,cnt)
 	plt.show()
 
-
 if __name__ == "__main__":
-	data = read_csv()
-	data = np.array(data)
-	el_dict = plot_helper(data)
-	plot_hist(el_dict)
+    data = read_csv()
+    data = np.array(data)
+    res = get_glass(3,data)
+    print(res)
+    print(len(res))
+    el_dict = plot_helper(data)
+    plot_hist(el_dict)
+    
+
 
 	
 	
