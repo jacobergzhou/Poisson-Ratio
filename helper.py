@@ -189,6 +189,13 @@ def plot_hist(el_dict):
 
 
 def duplicate_helper(data):
+	"""
+	function to return a dictionary with only nonzero values
+	param:
+		data: a matrix representation of the csv file
+	return:
+		data_ls: list of dictionary with only nonzero values
+	"""
 	data_ls = []
 	for row in data:
 		row = row.tolist()
@@ -198,6 +205,13 @@ def duplicate_helper(data):
 	return data_ls
 
 def check_duplicate(data_ls):
+	"""
+	function to check the duplicate of the row vectors
+	param:
+		data_ls: list of dictionary with only nonzero values
+	return:
+		duplicate_ls: a list of lists where each sublist represent the No. of the glass that has the same compounds
+	"""
 	duplicate = {}
 	for i in data_ls:
 
@@ -220,9 +234,6 @@ def check_duplicate(data_ls):
 	for key in duplicate:
 		if len(duplicate[key]) > 1:
 			duplicate_ls.append(duplicate[key])
-	# for ls in duplicate_ls:
-	# 	for i in ls:
-	# 		print(get_glass_info(i,data))
 	with open('duplicate_ls.pkl','wb') as f:
  		pickle.dump(duplicate_ls,f)
 	return duplicate_ls
