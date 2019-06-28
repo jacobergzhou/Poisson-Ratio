@@ -187,25 +187,61 @@ def plot_hist(el_dict):
 	plt.bar(ypos,cnt)
 	plt.show()
 
+
+def duplicate_helper(data):
+	data_ls = []
+	for row in data:
+		row = row.tolist()
+		path = row[0]
+		glass,dict = get_glass_info(path,data)
+		data_ls.append((glass,dict))
+	return data_ls
+
+def check_duplicate(data_ls):
+	duplicate = {}
+	for i in data_ls:
+
+		dict = i[1]
+		sum = 0
+		for key in dict:
+			if key != "Young's modulus E (GPa)" and key != "Shear modulus G (GPa)" and key != "Poisson's ratio v":
+				scalar = 1
+				for j in key:
+					scalar *= (ord(j)+0.1)
+					#print(scalar)
+				val = (scalar) * dict[key]
+				sum += val
+		if sum not in duplicate:
+			duplicate[sum] = [i[0]]
+		else:
+			duplicate[sum].append(i[0])
+	# print(duplicate)
+	duplicate_ls = []
+	for key in duplicate:
+		if len(duplicate[key]) > 1:
+			duplicate_ls.append(duplicate[key])
+	# for ls in duplicate_ls:
+	# 	for i in ls:
+	# 		print(get_glass_info(i,data))
+	with open('duplicate_ls.pkl','wb') as f:
+ 		pickle.dump(duplicate_ls,f)
+	return duplicate_ls
+
 if __name__ == "__main__":
 
-	# data = read_csv()
-	# data = np.array(data)
-	# res = get_metal_glass(data)
-	# num = []
-	# for i in res:
-	# 	num.append(i[0])
-	# x = []
-	# for i in num:
-	# 	glass,dict = get_glass_info(i,data)
-	# 	x.append((glass,dict))
-	# # print(len(x))
-	# with open('metal.pkl','wb') as f:
-	#  	pickle.dump(x,f)
-	with open('metal.pkl','rb') as f:	
-		ls = pickle.load(f)
-	print(ls)
+	data = read_csv()
+	data = np.array(data)
+	print(len(data))
+	# data_ls = duplicate_helper(data)
+	# with open('data_ls.pkl','wb') as f:
+	#  	pickle.dump(data_ls,f)
+	# with open('data_ls.pkl','rb') as f:	
+	# 	data_ls = pickle.load(f)
+	# duplicate_ls = check_duplicate(data_ls)
 
+	with open('duplicate_ls.pkl','rb') as f:	
+		duplicate_ls = pickle.load(f)
+	print(len(duplicate_ls))
 
 
 	
