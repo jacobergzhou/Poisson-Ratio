@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import pickle
 el_ls = ["","Code","Glass #","Author","Year","Trademark","Ag2O","AgI","Al","Al2O3","AlF3","AlN","As","As2O3","As2O5","As2S3","As2Se3","AsSe","B","B2O3","BaCl2","BaF2","BaO","BeF2","BeO","Bi2O3","BiCl3","Br","Ca","CaF2","CaO","Cd","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Cl","Co3O4","CoO","Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er","Er2O3","ErF3","Eu","Eu2O3","EuF3","F","Fe","Fe2O3","FeO","Ga","Ga2O3","Ga2S3","Ga2Se3","GaF3","Gd2O3","GdF3","Ge","GeO2","GeS2","GeSe2","H2O","HfF4","HfO2","Hg","Ho2O3","I","InF3","K","K2O","K2S","K2SO4","KBr","KCl","KF","KHF2","La","La2O3","La2S3","LaF3","Li","Li2O","Li2S","Li2SO4","LiBr","LiCl","LiF","LiI","MgF2","MgO","Mn2O3","MnF2","MnO","MnO2","MoO2","MoO3","N","Na","Na2O","Na2S","Na2SO4","NaCl","NaF","NaPO3","Nb2O5","Nd","Nd2O3","NdF3","NH4NO3","NiO","O","OH","P","P2O5","Pb","PbCl2","PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","S","Sb","Sb2O3","Sb2S3","Sc2O3","Se","Si","Si3N4","SiC","SiO2","Sm2O3","Sn","SnO","SnO2","SO2","SO3","Sr","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3","Te","TeO2","Th","ThF4","ThO2","TiO2","Tl","Tl2O","Tl2Se","TlSe","Tm2O3","U","U3O8","UO2","V","V2O5","VO6","WO3","Y","Y2O3","Yb2O3","YbF3","YF3","ZnCl2","ZnF2","ZnO","ZnSO4","ZrF4","ZrO2","Young's modulus E (GPa)","Shear modulus G (GPa)","Poisson's ratio v"]
-
+compound_ls = ["Ag2O","AgI","Al","Al2O3","AlF3","AlN","As","As2O3","As2O5","As2S3","As2Se3","AsSe","B","B2O3","BaCl2","BaF2","BaO","BeF2","BeO","Bi2O3","BiCl3","Br","Ca","CaF2","CaO","Cd","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Cl","Co3O4","CoO","Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er","Er2O3","ErF3","Eu","Eu2O3","EuF3","F","Fe","Fe2O3","FeO","Ga","Ga2O3","Ga2S3","Ga2Se3","GaF3","Gd2O3","GdF3","Ge","GeO2","GeS2","GeSe2","H2O","HfF4","HfO2","Hg","Ho2O3","I","InF3","K","K2O","K2S","K2SO4","KBr","KCl","KF","KHF2","La","La2O3","La2S3","LaF3","Li","Li2O","Li2S","Li2SO4","LiBr","LiCl","LiF","LiI","MgF2","MgO","Mn2O3","MnF2","MnO","MnO2","MoO2","MoO3","N","Na","Na2O","Na2S","Na2SO4","NaCl","NaF","NaPO3","Nb2O5","Nd","Nd2O3","NdF3","NH4NO3","NiO","O","OH","P","P2O5","Pb","PbCl2","PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","S","Sb","Sb2O3","Sb2S3","Sc2O3","Se","Si","Si3N4","SiC","SiO2","Sm2O3","Sn","SnO","SnO2","SO2","SO3","Sr","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3","Te","TeO2","Th","ThF4","ThO2","TiO2","Tl","Tl2O","Tl2Se","TlSe","Tm2O3","U","U3O8","UO2","V","V2O5","VO6","WO3","Y","Y2O3","Yb2O3","YbF3","YF3","ZnCl2","ZnF2","ZnO","ZnSO4","ZrF4","ZrO2"]
+         
 metal_ls = ["As","Al","B","Si","Ca","Cd","Er","Eu","Fe","Ga","Ge","Hg","K","La","Li","Na","Nd","Pb","Sn","Sr","Sb","Te","Sb","Th","Tl","U","V","Y"]
 def convert_to_csv():
 	"""
@@ -15,18 +16,19 @@ def convert_to_csv():
 	data_xls = pd.read_excel(path, index_col=None)
 	data_xls.to_csv('Poisson_data_cleaned_06212019.csv', encoding='utf-8',header = None,index = False)
 
-
 def read_csv():
-	"""
+    """
 	read an csv data return the a matrix 
 	return:
 		data: a matrix data representing all the row vectors in the csv data
 	"""
-	path = "Poisson_data_cleaned_06212019.csv"
-	df = pd.read_csv(path)
-	data = df.values
-	#print(data)
-	return data
+    path = "Poisson_data_cleaned_06212019.csv"
+    #path = "test_data.csv"
+    df = pd.read_csv(path)
+    data = df.values
+    #print(data)
+    return data
+
 
 def get_composition(compound,data):
 	"""
@@ -78,6 +80,29 @@ def get_glass(compound_number, data):
 			glass.append(row[0])
 	return glass
 
+
+def plot_frequency(data):
+    """
+	function to plot the occurances of glasses with a specific number of compounds
+	param:
+		data: a matrix representation of the csv file
+	"""
+    frequency = []
+    xpos = []
+    for i in range(1, 7):
+        y = len(get_glass(i,data))
+        frequency.append(y)
+        xpos.append(i)
+    
+    plt.bar(xpos, frequency)
+    plt.ylabel("number of occurances")
+    plt.xlabel("number of compounds")
+    plt.show()
+
+    
+
+    
+
 def get_glass_info(glass, data):
     """
 	get the composition information of a specific glass
@@ -92,6 +117,24 @@ def get_glass_info(glass, data):
         row = row.tolist()
         if row[0] == glass:
             for i in range(6,len(row)):
+                if row[i] != 0.0:
+                    dict[el_ls[i]] = row[i]
+    return dict
+
+def get_glass_compound_info(glass, data):
+    """
+	get the composition information of a specific glass
+	param:
+		glass: index of the glass (e.g. '# 305')
+		data: a matrix representation of the csv file
+	return:
+		dict: a dictionary of the glass composition
+	"""
+    dict = {}
+    for row in data:
+        row = row.tolist()
+        if row[0] == glass:
+            for i in range(6,len(row)-3):
                 if row[i] != 0.0:
                     dict[el_ls[i]] = row[i]
     return dict
@@ -148,23 +191,6 @@ def plot_helper(data):
 # 			num += 1
 # 	print(num)
 
-def get_glass_info(glass, data):
-	"""
-	get the composition information of a specific glass
-	param:
-		glass: index of the glass (e.g. '# 305')
-		data: a matrix representation of the csv file
-	return:
-		dict: a dictionary of the glass composition
-	"""
-	dict = {}
-	for row in data:
-		row = row.tolist()
-		if row[0] == glass:
-			for i in range(6,len(row)):
-				if row[i] != 0.0:
-					dict[el_ls[i]] = row[i]
-	return (glass,dict)
 	
 
 def plot_hist(el_dict):
@@ -238,21 +264,280 @@ def check_duplicate(data_ls):
  		pickle.dump(duplicate_ls,f)
 	return duplicate_ls
 
-if __name__ == "__main__":
 
-	data = read_csv()
-	data = np.array(data)
-	print(len(data))
-	# data_ls = duplicate_helper(data)
+def is_in(elm, lst):
+    """
+	function to check whether an element is a member of a list
+	param:
+		elm: the element we want to check
+        lst: the list
+	return:
+		result: the boolean(True or False) representing whether the element is the member
+	"""
+    result = False
+    for i in lst:
+        if elm == i:
+            result = True
+            break
+    
+    return result
+        
+       
+def get_compound(data):
+    """
+	function to get the composition information of all the glasses
+	param:
+		data: a matrix representation of the csv file
+	return:
+		result_lst: a list of lists the ith list representing the compounds that the ith glass has
+	"""
+    
+    result_lst = []
+    for row in data:
+        row = row.tolist()
+        temp_lst = []
+        for i in range(6,len(row)-3):
+            if row[i] != 0.0:
+                temp_lst.append(el_ls[i])
+        result_lst.append(temp_lst)
+    return result_lst
+
+def find_same_glasses_helper(data, lst):
+    """
+	a helper function to find the same glasses within a group of glasses with same compounds
+	param:
+		data: a matrix representation of the csv file
+        lst: a list of glasses with same compounds
+	return:
+		result_lst: list of same glasses
+	"""
+    #glasses_names = data[:0].tolist()
+    amount_lst = []
+    for glass in lst:
+        temp_lst = []
+        dic = get_glass_compound_info(glass, data)
+        for key in dic.keys():
+            temp_lst.append(dic[key])
+        amount_lst.append(temp_lst)
+    #print(amount_lst)
+    
+    result_lst = []
+    remove_lst = []
+    for i in range(0, len(amount_lst) - 1):
+        if i >= len(amount_lst) - 1:
+            break
+        if is_in(i, remove_lst):
+            continue
+        
+        temp_lst = []
+        temp_lst.append(lst[i])
+        flag = False
+        
+        for j in range(i+1, len(amount_lst)):
+            if j >= len(amount_lst):
+                break
+            
+            if amount_lst[i] == amount_lst[j]:
+                temp_lst.append(lst[j])
+                remove_lst.append(j)
+                flag = True
+            
+        if flag:
+            result_lst.append(temp_lst)
+    
+    #print("result_lst: ")
+    #print(result_lst)
+    return result_lst   
+    
+            
+
+
+def find_same_glasses(data):
+    """
+	function to find the same glasses(same compounds and same amount)
+	param:
+		data: a matrix representation of the csv file
+	return:
+		result_lst: list of same glasses
+	"""
+    #glass_names = data[:,0].tolist()
+    glasses_lst = find_same_compound_glasses(data)
+    result_lst = []
+    for glasses in glasses_lst:
+        temp_lst = find_same_glasses_helper(data, glasses)
+        if len(temp_lst) != 0:
+            print(temp_lst)
+            result_lst.append(temp_lst)
+    
+    return result_lst
+    
+
+def find_same_compound_glasses(data):
+    """
+	function to get the glasses with the same compounds
+	param:
+		data: a matrix representation of the csv file
+	return:
+		result_glasses: a list of lists where the glasses with the same compounds are in the same inner list
+	"""
+    glass_names = data[:,0].tolist()
+    compound_lst = get_compound(data)        
+    
+    lst = []
+    remove_lst = []
+    for i in range(0,len(compound_lst)-1):
+        if i >= len(compound_lst)-1:
+            break
+        if is_in(i, remove_lst):
+            continue
+        temp_lst = []
+        temp_lst.append(i)
+        flag = False
+        
+        for j in range(i+1, len(compound_lst)):
+            if j >= len(compound_lst):
+                break
+
+            if compound_lst[i] == compound_lst[j]:
+                temp_lst.append(j)
+                remove_lst.append(j)
+                flag = True
+            
+        if flag:
+            #print(temp_lst)
+            lst.append(temp_lst)
+    
+    result_glasses = []
+    for i in lst:
+        temp_lst = []
+        for j in i:
+            temp_lst.append(glass_names[j])
+        result_glasses.append(temp_lst)
+    return result_glasses
+
+'''
+def find_same_compound(data):
+    
+    # lst: all the data (list of list)
+    # outerlist: compounds
+    # innerlist: amount of compounds
+    glass_names = data[:,0].tolist()
+    
+    lst = []
+    for i in range(6,187):
+        col = data[:,i].tolist()
+        lst.append(col)
+    
+    result_lst = []
+    result_lst_0 = []
+    result_lst_1 = []
+    for j in range(0, len(lst[0])):
+        if lst[0][j] == 0:
+            result_lst_0.append(j)
+        else:
+            result_lst_1.append(j)
+    result_lst.append(result_lst_0)
+    result_lst.append(result_lst_1)
+
+
+    for i in range(1, len(lst)):
+        for j in range(0,len(result_lst)):
+            
+            if j >= len(result_lst):
+                break
+            
+            #print("original result_lst: " )
+            #print(result_lst)
+            #print("i = ")
+            #print(i)
+            #print(el_ls[i+6])
+            #print("j = ")
+            #print(j)
+            temp_lst_0 = []
+            temp_lst_1 = []
+            for glass in result_lst[j]:
+                if lst[i][glass] == 0.0:
+                    temp_lst_0.append(glass)
+                else:
+                    temp_lst_1.append(glass)
+            
+            if len(temp_lst_0) == 1:
+                result_lst[j].remove(temp_lst_0[0])
+            elif len(temp_lst_0) != 0:
+                result_lst.append(temp_lst_0)
+                for k in temp_lst_0:
+                    result_lst[j].remove(k)
+            
+            if len(temp_lst_1) == 1:
+                result_lst[j].remove(temp_lst_1[0]) 
+            
+            if len(result_lst[j]) == 0:
+                result_lst.remove([])
+                j = j - 1
+            #print("result_lst")
+            #print(result_lst)
+    
+    #print(result_lst)
+    result_glasses = []
+    for i in result_lst:
+        temp_lst = []
+        for j in i:
+            temp_lst.append(glass_names[j])
+        result_glasses.append(temp_lst)
+            
+    
+    return result_glasses         
+
+           
+    
+#    same_glasses = []
+#   for i in range(len(glass1) - 1):
+#        apd = False
+#        temp_same = []
+#        temp_same.append(glass1[i])
+#        for j in range(i+1, len(glass1)):
+#           if (same_glass(glass1[i], glass1[j], data)):
+#               apd = True
+#               temp_same.append(glass1[j])
+#        if apd:
+#            same_glasses.append(temp_same)
+#    
+#    return same_glasses
+'''
+
+if __name__ == "__main__":
+    data = read_csv()
+    data = np.array(data)
+    #print(len(data))
+    #plot_frequency(data)
+    #lst2 = find_same_compound_glasses(data)
+    #print(lst2)
+    lst = find_same_glasses(data)
+    print(lst)
+    #print(lst[0])
+    #print(lst)
+    #glass_names = data[:,0].tolist()
+    #print(glass_names)
+    #print(test_find_same_glass2(data))
+    # data_ls = duplicate_helper(data)
 	# with open('data_ls.pkl','wb') as f:
 	#  	pickle.dump(data_ls,f)
 	# with open('data_ls.pkl','rb') as f:	
 	# 	data_ls = pickle.load(f)
 	# duplicate_ls = check_duplicate(data_ls)
+    
+    with open('duplicate_ls.pkl','rb') as f:
+        duplicate_ls = pickle.load(f)
+    #print(len(duplicate_ls))
+    
+    glasses = ['# 4', '# 1221', '# 1277', '# 1342']
+    for i in glasses:
+        print(get_glass_compound_info(i, data))
+    
+    #print(same_glass("# 1", "# 2", data))
 
-	with open('duplicate_ls.pkl','rb') as f:	
-		duplicate_ls = pickle.load(f)
-	print(len(duplicate_ls))
+           
+
 
 
 	
