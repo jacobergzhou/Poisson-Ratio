@@ -242,7 +242,9 @@ if __name__ == "__main__":
 
 	data = read_csv()
 	data = np.array(data)
-	print(len(data))
+	# print(len(data))
+	# res = get_glass_info("# 304",data)
+	# print(res)
 	# data_ls = duplicate_helper(data)
 	# with open('data_ls.pkl','wb') as f:
 	#  	pickle.dump(data_ls,f)
@@ -252,7 +254,11 @@ if __name__ == "__main__":
 
 	with open('duplicate_ls.pkl','rb') as f:	
 		duplicate_ls = pickle.load(f)
-	print(len(duplicate_ls))
+	for i in duplicate_ls:
+		for j in i:
+			print(get_glass_info(j,data))
+		print("\n")
+	# print(duplicate_ls)
 
 
 	
