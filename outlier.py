@@ -30,14 +30,15 @@ def std_check(num_ls,compound_ls):
 		out_ind = num_ls.index(ls)
 		std = np.nanstd(ls)
 		mean = np.nanmean(ls)
-		cut_off = std * 2
+		cut_off = std * 3
 		lower_limit = mean - cut_off
 		upper_limit = mean + cut_off
 		for outlier in ls:
 			if outlier > upper_limit or outlier < lower_limit:
 				in_ind = ls.index(outlier)
 				temp.append(compound_ls[out_ind][in_ind])
-				result.append(temp)
+		if len(temp) != 0:
+			result.append(temp)
 	return result
 
 if __name__ == "__main__":
@@ -50,10 +51,10 @@ if __name__ == "__main__":
 	# 	poisson_ls.append(num)
 	# with open('poisson_data.pkl','wb') as f:
 	#  	pickle.dump(poisson_ls,f)
-	with open('young_data.pkl','rb') as f:	
-		young_ls = pickle.load(f)
+	with open('poisson_data.pkl','rb') as f:	
+		poisson_ls = pickle.load(f)
 
-	result = std_check(young_ls,same_compound_ls)
+	result = std_check(poisson_ls,same_compound_ls)
 	print(result)
 
 
