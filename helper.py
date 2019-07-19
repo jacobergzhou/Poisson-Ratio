@@ -267,6 +267,14 @@ def check_duplicate(data_ls):
 	return duplicate_ls
 
 
+
+	data = read_csv()
+	data = np.array(data)
+	# print(len(data))
+	# res = get_glass_info("# 304",data)
+	# print(res)
+	# data_ls = duplicate_helper(data)
+
 def is_in(elm, lst):
     """
 	function to check whether an element is a member of a list
