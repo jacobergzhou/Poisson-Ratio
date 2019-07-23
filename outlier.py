@@ -82,10 +82,11 @@ def IQR_check(num_ls, compound_ls):
     return outlier
 
 if __name__ == "__main__":
-	# data = read_csv()
+    data = read_csv()
     with open('same_compound_ls.pkl','rb') as f:	
         same_compound_ls = pickle.load(f)
-	# poisson_ls = []
+    print(same_compound_ls)
+    # poisson_ls = []
 	# for i in same_compound_ls:
 	# 	num = generate_num(i,data)
 	# 	poisson_ls.append(num)
@@ -93,10 +94,18 @@ if __name__ == "__main__":
 	#  	pickle.dump(poisson_ls,f)
     with open('young_data.pkl','rb') as f:	
         poisson_ls = pickle.load(f)
+    
+    ls = ['# 2', '# 12', '# 594', '# 640', '# 641', '# 642', '# 643', '# 842', '# 843', '# 844', '# 899', '# 900', '# 901', '# 930', '# 931', '# 932', '# 933', '# 1187']
+    for i in ls:
+        print(get_glass_info(i,data))
 
     result = std_check(poisson_ls,same_compound_ls)
-    print(result)
+    #print(result)
     result1 = IQR_check(poisson_ls,same_compound_ls)
-    print(result1)
+    #print(result1)
+    result = []
+    for row in data:
+        result.append(row[0])
+    print(result)
 
 
