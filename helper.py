@@ -5,20 +5,38 @@ from collections import Counter
 import pickle
 import csv
 
+
+
+
 temp = pd.read_csv('Poisson_data_no_metal_07192019.csv', header=None).values
-el_ls = temp[0,:].tolist()
+# el_ls = temp[0,:].tolist()
+el_ls = []
 #el_ls = ["","Code","Glass #","Author","Year","Trademark","Ag2O","AgI","Al","Al2O3","AlF3","AlN","As","As2O3","As2O5","As2S3","As2Se3","AsSe","B","B2O3","BaCl2","BaF2","BaO","BeF2","BeO","Bi2O3","BiCl3","Br","Ca","CaF2","CaO","Cd","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Cl","Co3O4","CoO","Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er","Er2O3","ErF3","Eu","Eu2O3","EuF3","F","Fe","Fe2O3","FeO","Ga","Ga2O3","Ga2S3","Ga2Se3","GaF3","Gd2O3","GdF3","Ge","GeO2","GeS2","GeSe2","H2O","HfF4","HfO2","Hg","Ho2O3","I","InF3","K","K2O","K2S","K2SO4","KBr","KCl","KF","KHF2","La","La2O3","La2S3","LaF3","Li","Li2O","Li2S","Li2SO4","LiBr","LiCl","LiF","LiI","MgF2","MgO","Mn2O3","MnF2","MnO","MnO2","MoO2","MoO3","N","Na","Na2O","Na2S","Na2SO4","NaCl","NaF","NaPO3","Nb2O5","Nd","Nd2O3","NdF3","NH4NO3","NiO","O","OH","P","P2O5","Pb","PbCl2","PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","S","Sb","Sb2O3","Sb2S3","Sc2O3","Se","Si","Si3N4","SiC","SiO2","Sm2O3","SnO","SnO2","SO2","SO3","Sr","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3","Te","TeO2","Th","ThF4","ThO2","TiO2","Tl","Tl2O","TlSe","Tm2O3","U","U3O8","UO2","V","V2O5","VO6","WO3","Y","Y2O3","Yb2O3","YbF3","YF3","ZnCl2","ZnF2","ZnO","ZnSO4","ZrF4","ZrO2","Young's modulus E (GPa)","Shear modulus G (GPa)","Poisson's ratio v"]
 #compound_ls = ["Ag2O","AgI","Al","Al2O3","AlF3","AlN","As","As2O3","As2O5","As2S3","As2Se3","AsSe","B","B2O3","BaCl2","BaF2","BaO","BeF2","BeO","Bi2O3","BiCl3","Br","Ca","CaF2","CaO","Cd","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Cl","Co3O4","CoO","Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er","Er2O3","ErF3","Eu","Eu2O3","EuF3","F","Fe","Fe2O3","FeO","Ga","Ga2O3","Ga2S3","Ga2Se3","GaF3","Gd2O3","GdF3","Ge","GeO2","GeS2","GeSe2","H2O","HfF4","HfO2","Hg","Ho2O3","I","InF3","K","K2O","K2S","K2SO4","KBr","KCl","KF","KHF2","La","La2O3","La2S3","LaF3","Li","Li2O","Li2S","Li2SO4","LiBr","LiCl","LiF","LiI","MgF2","MgO","Mn2O3","MnF2","MnO","MnO2","MoO2","MoO3","N","Na","Na2O","Na2S","Na2SO4","NaCl","NaF","NaPO3","Nb2O5","Nd","Nd2O3","NdF3","NH4NO3","NiO","O","OH","P","P2O5","Pb","PbCl2","PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","S","Sb","Sb2O3","Sb2S3","Sc2O3","Se","Si","Si3N4","SiC","SiO2","Sm2O3","Sn","SnO","SnO2","SO2","SO3","Sr","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3","Te","TeO2","Th","ThF4","ThO2","TiO2","Tl","Tl2O","Tl2Se","TlSe","Tm2O3","U","U3O8","UO2","V","V2O5","VO6","WO3","Y","Y2O3","Yb2O3","YbF3","YF3","ZnCl2","ZnF2","ZnO","ZnSO4","ZrF4","ZrO2"]
-         
+
+
+correct_cmp = ["Ag2O","Al2O3","AlF3","As2O3","As2O5","B2O3","BaCl2","BaF2","BaO","BeF2",
+"BeO","Bi2O3","BiCl3","CaF2","CaO","CdCl2","CdF2","CdO","Ce2O3","CeF3","CeO2","Co3O4","CoO",
+"Cr2O3","Cs2O","CsCl","CsF","Cu2O","CuO","Dy2O3","Er2O3","ErF3","Eu2O3","EuF3","Fe2O3",
+"FeO","Ga2O3","GaF3","Gd2O3","GdF3","GeO2","H2O","HfF4","HfO2","Ho2O3","InF3","K2O",
+"KCl","KF","KHF2","La2O3","LaF3","Li2O","LiCl","LiF","MgF2","MgO","Mn2O3","MnF2","MnO",
+"MnO2","MoO2","MoO3","Na2O","NaCl","NaF","Nb2O5","Nd2O3","NdF3","NiO","OH","P2O5","PbCl2",
+"PbF2","PbO","PdO","Pr2O3","Pr6O11","PrF3","Rb2O","RbF","Rh2O3","RuO2","Sb2O3","Sc2O3",
+"SiO2","Sm2O3","SnO","SnO2","SO2","SO3","SrCl2","SrF2","SrO","Ta2O3","Ta2O5","Tb2O3","TbF3",
+"TeO2","ThF4","ThO2","TiO2","Tl2O","Tm2O3","U3O8","UO2","V2O5","VO6","WO3","Y2O3","Yb2O3",
+"YbF3","YF3","ZnCl2","ZnF2","ZnO","ZrF4","ZrO2"]
+
+stupid_cmp = ["K2SO4","Li2SO4","Na2SO4","NaPO3","NH4NO3","ZnSO4"]
+
 metal_ls = ["As","Al","B","Si","Ca","Cd","Er","Eu","Fe","Ga","Ge","Hg","K","La","Li","Na","Nd","Pb","Sn","Sr","Sb","Te","Sb","Th","Tl","U","V","Y"]
 def convert_to_csv():
 	"""
 	convert an xlsx file to csv format and write to disk
 	"""
-	path = "data/Poisson_data_cleaned_06212019.xlsx"
+	path = "Error_detection_07232019.xlsx"
 
 	data_xls = pd.read_excel(path, index_col=None)
-	data_xls.to_csv('Poisson_data_cleaned_06212019.csv', encoding='utf-8',header = None,index = False)
+	data_xls.to_csv('Error_detection_07232019.csv', encoding='utf-8',index = False)
 
 def read_csv():
     """
@@ -29,7 +47,7 @@ def read_csv():
     #path = "Poisson_data_cleaned_06212019.csv"
     #path = "test_data.csv"
     #path = "Poisson_data_cleaned_07162019.csv"
-    path = "Poisson_data_no_metal_07192019.csv"
+    path = "test_raw_data_07252019.csv"
     df = pd.read_csv(path)
     data = df.values
     #print(data)
@@ -118,7 +136,7 @@ def get_glass_info_subscript(glass, data):
     return total
 
 def get_glass_info(glass, data):
-    """
+	"""
 	get the composition information of a specific glass
 	param:
 		glass: index of the glass (e.g. '# 305')
@@ -126,14 +144,14 @@ def get_glass_info(glass, data):
 	return:
 		dict: a dictionary of the glass composition
 	"""
-    dict = {}
-    for row in data:
-        row = row.tolist()
-        if row[0] == glass:
-            for i in range(1,len(row)-2):
-                if row[i] != 0.0:
-                    dict[el_ls[i]] = row[i]
-    return dict
+	dict = {}
+	for row in data:
+		row = row.tolist()
+		if row[0] == glass:
+			for i in range(7,len(row)):
+				if row[i] != 0.0:
+					dict[el_ls[i]] = row[i]
+	return dict
 
 def get_glass_compound_info(glass, data):
     """
@@ -153,7 +171,7 @@ def get_glass_compound_info(glass, data):
                     dict[el_ls[i]] = row[i]
     return dict
 
-def get_metal_glass(data):
+def get_metal_glass(data,dict):
 	"""
 	get the list of row vectors that contains only metal element
 	param:
@@ -161,15 +179,23 @@ def get_metal_glass(data):
 	return:
 		result: a list of all the corresponding row vector number which only consists of metals
 	"""
+
 	result = []
 	for row in data:
 		temp = True
 		row = row.tolist()
-		for i in range(6 , len(row)-5):
-			if (row[i] != 0.0) and (el_ls[i] not in metal_ls):
-				temp = False
-		if temp == True:
-			result.append(row)
+		ind = row[0]
+		sub_dict = dict[ind]
+		score = 0
+		for key in sub_dict:
+			if key in correct_cmp:
+				score += 1
+
+		if score == 0:
+			result.append(ind)
+			print(ind)
+			print(sub_dict)
+			print("\n")
 	return result
 
 def plot_helper(data):
@@ -190,20 +216,6 @@ def plot_helper(data):
 				else:
 					el_dict[el_ls[i]] += 1
 	return el_dict
-
-# def check(data):
-# 	num = 0
-# 	for compound in el_ls[5:189]:
-# 		ind_col = el_ls.index(compound)
-# 		col_vec = data[:,ind_col]
-# 		ind_row = []
-# 		zero_vec = True
-# 		for i in range(len(col_vec)):
-# 			if col_vec[i] != 0:
-# 				zero_vec = False
-# 		if zero_vec == True:
-# 			num += 1
-# 	print(num)
 
 	
 
@@ -404,14 +416,6 @@ def find_family(compound_lst, data):
     return result
 
 def export_dic_to_csv(compound_lst, data):
-    """
-	find the glasses in the same family and export their information to a csv called "Output.csv"
-	param:
-		compound_lst: a list of strings representing the compounds of that family
-		data: a matrix representation of the csv file
-	return:
-		dc_lst: a list of dictionaries representing the information of the glasses in the same family
-	"""
     family = find_family(compound_lst, data)
     dic_lst = []
     for i in family:
@@ -517,97 +521,85 @@ def find_same_compound_glasses(data):
         result_glasses.append(temp_lst)
     return result_glasses
 
+def get_header():
+	"""
+	get the list of header in the csv
+	"""
+	path = "Non_metal_07242019.csv"
+	df = pd.read_csv(path,header = None)
+	data = df.values
+	el_ls = data[0].tolist()
+	return el_ls
+
+def get_dict_of_dict(data):
+	print(el_ls)
+	nested_dict = {}
+	for row in data:
+		row = row.tolist()
+		ind = row[0]
+		dict = get_glass_info(ind,data)
+		nested_dict[ind] = dict
+	return nested_dict
+		
 
 if __name__ == "__main__":
-    data = read_csv()
-    data = np.array(data)
+    # data = read_csv()
+    # data = np.array(data)
     
-    ls1 = export_dic_to_csv(['AlF3', 'BaF2', 'CaF2', 'MgF2', 'PbF2', 'YbF3'], data)
-    #print(ls1)
+    # ls1 = export_dic_to_csv(['K2O','MoO3', 'P2O5'], data)
+    # #print(ls1)
     
-    #ls = find_family(['K2O','MoO3', 'P2O5'],data)
-    #print(ls)
+    # ls = find_family(['K2O','MoO3', 'P2O5'],data)
+  
+    
+    # with open('duplicate_ls.pkl','rb') as f:
+    #     duplicate_ls = pickle.load(f)
 
-    #ls = check_if_all_zero(data)
-    #print(ls)
-    #print(len(data))
-    #plot_frequency(data)
-    #lst2 = find_same_compound_glasses(data)
-    #print(lst2)
-    #lst = find_same_glasses(data)
-    #print(lst[0])
-    #print(lst)
-    #glass_names = data[:,0].tolist()
-    #print(glass_names)
-    #print(test_find_same_glass2(data))
-    # data_ls = duplicate_helper(data)
-	# with open('data_ls.pkl','wb') as f:
-	#  	pickle.dump(data_ls,f)
-	# with open('data_ls.pkl','rb') as f:	
-	# 	data_ls = pickle.load(f)
-	# duplicate_ls = check_duplicate(data_ls)
-    
-    with open('duplicate_ls.pkl','rb') as f:
-        duplicate_ls = pickle.load(f)
-    #print(len(duplicate_ls))
-    
-'''    
-    # create the error_detection csv
-    glass_names = data[:,0].tolist()
-    lst = []
-    for i in glass_names:
-        lst.append(get_glass_info_subscript(i, data))
-    csv_input = pd.read_csv('Poisson_data_no_metal_07192019.csv')
-    csv_input['glass_comp'] = lst
-    csv_input.to_csv('output.csv', index=False)
-    print(lst)
-'''
+    el_ls = get_header()
+    # print(el_ls)
+    # # print(metal_ls)
+    # data = read_csv()   
+    # nested_dict = get_dict_of_dict(data)     
+    # # with open('nested_dict.pkl','wb') as f:
+    # #     pickle.dump(nested_dict,f)
+    # # with open('nested_dict.pkl','rb') as f:
+    # #     nested_dict = pickle.load(f)
+    # res = get_metal_glass(data,nested_dict)
+    # print(res)
 
-'''  
-    with open("Poisson_data_no_metal_07192019.csv", 'r') as csvinput:
-        with open("output.csv", 'w') as csvoutput:
-            writer = csv.writer(csvoutput, lineterminator = '\n')
-            reader = csv.reader(csvinput)
-            
-            all = []
-            row = next(reader)
-            row.
-'''    
-    
-    
-
-'''   
-    lst = find_same_glasses(data)
-    print(lst)
-    f = open("result.txt","w")
-    for i in lst:    
-        for j in i:
-            f.write('-------------------------------------------------------------------------------')
-            f.write('-------------------------------------------------------------------------------')
-            for k in j:
-                dic = get_glass_info(k, data)
-                f.write(k)
-                f.write(str(dic))
-                f.write('\n')
-    f.close()
-    
-    
-    ls1 = find_same_compound_glasses(data)
-    f1 = open("result1.txt", "w")
-    for i in ls1:
-        for j in i:
-            f1.write('-------------------------------------------------------------------------------')
-            f1.write('-------------------------------------------------------------------------------') 
-            dic = get_glass_info(j,data)
-            #print(dic)
-            f1.write(j)
-            f1.write(str(dic))
-            f1.write('\n')
-    f1.close()
-'''
-           
+    # csvfile = "Non_metal_07252019.csv"
+    # with open(csvfile, 'w') as csvfile:
+    #     writer = csv.writer(csvfile, delimiter=',')
+    #     writer.writerow(el_ls)
+    #     for row in data:
+    #         row = row.tolist()
+    #         if row[0] not in res:
+    #             writer.writerow(row)
+    path1 = "Non_metal_07242019.csv"
+    df = pd.read_csv(path1)
+    data_0724 = df.values
+    path2 = "Non_metal_07252019.csv"
+    df = pd.read_csv(path2)
+    data_0725 = df.values
+    ind_0724 = []
+    ind_0725 = []
+    res = []
+    for row in data_0724:
+    	row = row.tolist()
+    	ind_0724.append(row[0])
+    for row in data_0725:
+    	row = row.tolist()
+    	ind_0725.append(row[0])
+    for i in ind_0724:
+    	if i not in ind_0725:
+    		print(i)
+    		print(get_glass_info(i,data_0724))
+    		print("\n")
+    # for i in ind_0725:
+    # 	if i not in ind_0724:
+    # 		print(i)
+    # 		print(get_glass_info(i,data_0725))
+    # 		print("\n")
 
 
-
-	
-
+ 
