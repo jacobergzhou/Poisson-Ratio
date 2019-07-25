@@ -47,7 +47,7 @@ def read_csv():
     #path = "Poisson_data_cleaned_06212019.csv"
     #path = "test_data.csv"
     #path = "Poisson_data_cleaned_07162019.csv"
-    path = "test_raw_data_07252019.csv"
+    path = "non_metal_07252019.csv"
     df = pd.read_csv(path)
     data = df.values
     #print(data)
@@ -166,9 +166,10 @@ def get_glass_compound_info(glass, data):
     for row in data:
         row = row.tolist()
         if row[0] == glass:
-            for i in range(6,len(row)-5):
+            for i in range(7,len(row)-3):
                 if row[i] != 0.0:
-                    dict[el_ls[i]] = row[i]
+                    num = round(row[i],3)
+                    dict[el_ls[i]] = num
     return dict
 
 def get_metal_glass(data,dict):
@@ -525,7 +526,7 @@ def get_header():
 	"""
 	get the list of header in the csv
 	"""
-	path = "Non_metal_07242019.csv"
+	path = "Non_metal_07252019.csv"
 	df = pd.read_csv(path,header = None)
 	data = df.values
 	el_ls = data[0].tolist()
@@ -543,8 +544,9 @@ def get_dict_of_dict(data):
 		
 
 if __name__ == "__main__":
-    # data = read_csv()
-    # data = np.array(data)
+    data = read_csv()
+    data = np.array(data)
+    el_ls = get_header()
     
     # ls1 = export_dic_to_csv(['K2O','MoO3', 'P2O5'], data)
     # #print(ls1)
@@ -554,8 +556,17 @@ if __name__ == "__main__":
     
     # with open('duplicate_ls.pkl','rb') as f:
     #     duplicate_ls = pickle.load(f)
+    
+    # add "Glass_composition" column
+    info = []
+    glass_names = data[:,0].tolist()
+    for i in glass_names:
+        info.append(get_glass_info_subscript(i,data))
+    csv_input = pd.read_csv('non_metal_07252019.csv')
+    csv_input['Glass_composition'] = info
+    csv_input.to_csv('output.csv', index=False)
+    
 
-    el_ls = get_header()
     # print(el_ls)
     # # print(metal_ls)
     # data = read_csv()   
@@ -575,6 +586,7 @@ if __name__ == "__main__":
     #         row = row.tolist()
     #         if row[0] not in res:
     #             writer.writerow(row)
+    '''
     path1 = "Non_metal_07242019.csv"
     df = pd.read_csv(path1)
     data_0724 = df.values
@@ -600,6 +612,7 @@ if __name__ == "__main__":
     # 		print(i)
     # 		print(get_glass_info(i,data_0725))
     # 		print("\n")
+    '''
 
 
  
