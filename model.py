@@ -4,9 +4,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-dataset = pd.read_csv('Poisson_data_no_metal_07192019.csv')
-X = dataset.iloc[:,6:187].values
-y = dataset.iloc[:,189].values
+dataset = pd.read_csv('Poisson_data_no_metal_07252019.csv')
+X = dataset.iloc[0:4000,7:188].values
+y = dataset.iloc[0:4000,190].values
+X_test
+
 
 from sklearn.linear_model import LinearRegression
 lin_reg = LinearRegression()
