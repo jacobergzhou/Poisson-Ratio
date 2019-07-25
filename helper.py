@@ -404,6 +404,14 @@ def find_family(compound_lst, data):
     return result
 
 def export_dic_to_csv(compound_lst, data):
+    """
+	find the glasses in the same family and export their information to a csv called "Output.csv"
+	param:
+		compound_lst: a list of strings representing the compounds of that family
+		data: a matrix representation of the csv file
+	return:
+		dc_lst: a list of dictionaries representing the information of the glasses in the same family
+	"""
     family = find_family(compound_lst, data)
     dic_lst = []
     for i in family:
@@ -514,10 +522,10 @@ if __name__ == "__main__":
     data = read_csv()
     data = np.array(data)
     
-    ls1 = export_dic_to_csv(['K2O','MoO3', 'P2O5'], data)
+    ls1 = export_dic_to_csv(['AlF3', 'BaF2', 'CaF2', 'MgF2', 'PbF2', 'YbF3'], data)
     #print(ls1)
     
-    ls = find_family(['K2O','MoO3', 'P2O5'],data)
+    #ls = find_family(['K2O','MoO3', 'P2O5'],data)
     #print(ls)
 
     #ls = check_if_all_zero(data)
