@@ -6,7 +6,7 @@ import pickle
 import csv
 
 
-
+path = "Non_metal_07252019_v3.csv"
 
 temp = pd.read_csv('Poisson_data_no_metal_07192019.csv', header=None).values
 # el_ls = temp[0,:].tolist()
@@ -47,7 +47,7 @@ def read_csv():
     #path = "Poisson_data_cleaned_06212019.csv"
     #path = "test_data.csv"
     #path = "Poisson_data_cleaned_07162019.csv"
-    path = "non_metal_07252019.csv"
+    #path = "Non_metal_07252019_v3.csv"
     df = pd.read_csv(path)
     data = df.values
     #print(data)
@@ -131,7 +131,7 @@ def get_glass_info_subscript(glass, data):
     total = ""
     for key in dic:
         content = '(' + str(key) + ')' + str(dic[key]) + ' '
-        #content = content.translate(SUB)
+        content = content.translate(SUB)
         total = total + content
     return total
 
@@ -148,7 +148,7 @@ def get_glass_info(glass, data):
 	for row in data:
 		row = row.tolist()
 		if row[0] == glass:
-			for i in range(7,len(row)):
+			for i in range(1,len(row)):
 				if row[i] != 0.0:
 					dict[el_ls[i]] = row[i]
 	return dict
@@ -331,7 +331,7 @@ def get_compound(data):
     for row in data:
         row = row.tolist()
         temp_lst = []
-        for i in range(6,len(row)-5):
+        for i in range(7,len(row)-3):
             if row[i] != 0.0:
                 temp_lst.append(el_ls[i])
         result_lst.append(temp_lst)
@@ -407,7 +407,7 @@ def is_subset(big_lst, small_lst):
             break
     return result
 
-def find_family(compound_lst, data):
+def find_family_helper(compound_lst, data):
     glass_names = data[:,0].tolist()
     compounds = get_compound(data)
     result = []
@@ -416,8 +416,8 @@ def find_family(compound_lst, data):
             result.append(glass_names[i])
     return result
 
-def export_dic_to_csv(compound_lst, data):
-    family = find_family(compound_lst, data)
+def find_family_with_info(compound_lst, data):
+    family = find_family_helper(compound_lst, data)
     dic_lst = []
     for i in family:
         temp_dic = {}
@@ -445,7 +445,10 @@ def export_dic_to_csv(compound_lst, data):
         temp_dic["Poisson's ratio v"] = glass_info["Poisson's ratio v"]
         
         dic_lst.append(temp_dic)
-    
+    return dic_lst
+
+def export_dict_to_csv(compound_lst, data):
+    dic_lst = find_family_with_info(compound_lst, data)
     csv_columns = []
     for key in dic_lst[0]:
         csv_columns.append(key)
@@ -455,7 +458,7 @@ def export_dic_to_csv(compound_lst, data):
         writer.writeheader()
         for data in dic_lst:
             writer.writerow(data)
-    return dic_lst
+    
 
             
                       
@@ -526,7 +529,7 @@ def get_header():
 	"""
 	get the list of header in the csv
 	"""
-	path = "Non_metal_07252019.csv"
+	#path = "Non_metal_07252019_v3.csv"
 	df = pd.read_csv(path,header = None)
 	data = df.values
 	el_ls = data[0].tolist()
@@ -558,13 +561,20 @@ if __name__ == "__main__":
     #     duplicate_ls = pickle.load(f)
     
     # add "Glass_composition" column
+    '''
     info = []
     glass_names = data[:,0].tolist()
     for i in glass_names:
         info.append(get_glass_info_subscript(i,data))
-    csv_input = pd.read_csv('non_metal_07252019.csv')
+    csv_input = pd.read_csv('Non_metal_07252019_v2.csv')
     csv_input['Glass_composition'] = info
     csv_input.to_csv('output.csv', index=False)
+    '''
+    
+    ls = ['TeO2','V']
+    #print(find_family(ls, data))
+    export_dict_to_csv(ls, data)
+    #print(get_glass_info('# 2171', data))
     
 
     # print(el_ls)
